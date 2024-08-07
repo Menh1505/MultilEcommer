@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0" version="24.7.6">
+  <diagram name="Trang-1" id="GJt1bkcNJSltzeDzESVS">
+    <mxGraphModel dx="1282" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-18" value="Product" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="220" width="160" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-19" value="+ Id&lt;div&gt;+ Image?&lt;/div&gt;&lt;div&gt;+ Name&lt;/div&gt;&lt;div&gt;+ Category&lt;/div&gt;&lt;div&gt;+ Cost Price&lt;/div&gt;&lt;div&gt;+ Selling Price&lt;/div&gt;&lt;div&gt;+ Inventory&lt;/div&gt;&lt;div&gt;+ Status&lt;/div&gt;&lt;div&gt;+ Discount?&lt;/div&gt;&lt;div&gt;+ Featured?&lt;/div&gt;&lt;div&gt;+ Category&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="CCLzpxR0XyiSKRXuehAc-18">
+          <mxGeometry y="50" width="160" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-20" value="Product Imgage" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="220" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-21" value="+ Id&lt;br&gt;+ Product Id&lt;br&gt;+ Img" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="CCLzpxR0XyiSKRXuehAc-20">
+          <mxGeometry y="50" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-22" value="Category" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="220" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-23" value="+Id&lt;br&gt;+Name" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="CCLzpxR0XyiSKRXuehAc-22">
+          <mxGeometry y="50" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-26" value="Invoice" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="550" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-27" value="+ Id&lt;div&gt;+ Creation time&lt;br&gt;+ Paid time&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="CCLzpxR0XyiSKRXuehAc-26">
+          <mxGeometry y="50" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-28" value="Invoice Details" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="550" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CCLzpxR0XyiSKRXuehAc-29" value="+ Invoice Id&lt;br&gt;+ Product Id&lt;br&gt;+ Quantity" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="CCLzpxR0XyiSKRXuehAc-28">
+          <mxGeometry y="50" width="160" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
