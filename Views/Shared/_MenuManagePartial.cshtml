@@ -1,0 +1,18 @@
+@* <div class="dropdown open">
+    <a class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+                Manage
+            </button>
+    <div class="dropdown-menu" aria-labelledby="triggerId">
+        <a class="dropdown-item" asp-action="Index" asp-controller="DbManage" asp-area="Database">Database</a>
+        <a class="dropdown-item" href="#">Disabled action</a>
+    </div>
+</div> *@
+<div class="dropdown">
+    <a class="btn btn-outline-danger dropdown-toggle" href="#" id="managedropdownmenu" data-bs-toggle="dropdown">
+        Manage
+    </a>
+    <div class="dropdown-menu" aria-labelledby="managedropdownmenu">
+        <a class="dropdown-item" asp-action="Index" asp-controller="DbManage" asp-area="Database">Database</a>
+    </div>
+</div>
