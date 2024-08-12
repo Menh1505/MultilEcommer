@@ -20,3 +20,46 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.app-navbar{
+  background: rgba(0, 0, 0, 0.8);
+}
+.app-navbar .text-dark{
+  color: #b9c3ce !important;
+}
+.app-navbar .text-dark:hover{
+  color: white !important;
+}
+.navbar-brand{
+  color: #ff00f7 !important;
+}
+.navbar-brand:hover{
+  color: #ff001e !important;
+}
+.dropdown-toggle{
+  color: #ff00f7;
+  border-color: #9000ff;
+}
+
+.contact-firstcol
+{
+  background: #ca4fc6;
+  color: white;
+  text-align: center;
+
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.contact-firstcol h4{
+  line-height: 40px;
+  font-variant: small-caps;
+  font-weight: 400;
+  margin-top: 20px;
+}
+.contact-firstcol img{
+  max-width: 100px;
+}
+
+.formcontact label{
+  font-weight: 700;
+}

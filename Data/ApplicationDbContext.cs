@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MultilEcommer.Models.Contact;
 
 namespace MultilEcommer.Data;
 
@@ -25,4 +26,5 @@ public class ApplicationDbContext : IdentityDbContext
             }
         }
     }
+    public DbSet<Contact> Contacts { get; set; }
 }
