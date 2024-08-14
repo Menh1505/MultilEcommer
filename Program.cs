@@ -1,3 +1,4 @@
+using App.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MultilEcommer.Data;
@@ -51,6 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/khongduoctruycap.html";
 });
 
+//Đăng ký dịch vụ đăng nhập bên thứ 3
 builder.Services.AddAuthentication()
         .AddGoogle(options =>
         {
@@ -71,7 +73,25 @@ builder.Services.AddAuthentication()
         // .AddMicrosoftAccount()
         ;
 
+//Đăng ký dịch vụ Mail
+builder.Services.AddOptions();
+var mailsettings = builder.Configuration.GetSection("MailSettings");
+builder.Services.Configure<MailSettings>(mailsettings);
+builder.Services.AddSingleton<IEmailSender, SendMailService>();
+
+//Đăng ký dịch vụ báo lỗi cho tài khoảng
+builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ViewManageMenu", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireRole(RoleName.Administrator);
+    });
+});
 
 var app = builder.Build();
 
