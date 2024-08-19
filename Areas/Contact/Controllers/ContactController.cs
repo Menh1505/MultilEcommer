@@ -13,7 +13,6 @@ using NuGet.Common;
 namespace MultilEcommer.Areas_Contact_Controllers_
 {
     [Area("Contact")]
-    [Authorize(Roles = RoleName.Administrator)]
     public class ContactController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -61,7 +60,6 @@ namespace MultilEcommer.Areas_Contact_Controllers_
         }
 
         [HttpPost("/contact")]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendContact([Bind("Name,Email,Message,Phone")] Contact contact)
         {
