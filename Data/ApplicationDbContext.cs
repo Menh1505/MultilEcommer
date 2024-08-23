@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MultilEcommer.Models;
 using MultilEcommer.Models.Contact;
+using MultilEcommer.Models.Blogs;
 
 namespace MultilEcommer.Data;
 
@@ -29,4 +30,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         }
     }
     public DbSet<Contact> Contacts { get; set; }
+
+public DbSet<MultilEcommer.Models.Blogs.Category> Category { get; set; } = default!;
 }
