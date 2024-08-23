@@ -30,5 +30,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         }
     }
     public DbSet<Contact> Contacts { get; set; }
-    public DbSet<MultilEcommer.Models.Blogs.Category> Categories { get; set; }
+
+public DbSet<MultilEcommer.Models.Blogs.Category> Category { get; set; } = default!;
+    //public DbSet<MultilEcommer.Models.Blogs.Category> Categories { get; set; }
 }
