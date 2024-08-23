@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MultilEcommer.Models.Blogs {
-  [Table("Category")]
+  [Table("Categories")]
   public class Category
   {
       [Key]
