@@ -79,7 +79,12 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddAuthorization(option => {
+    option.AddPolicy("ViewManageMenu", builder => {
+        builder.RequireAuthenticatedUser();
+        builder.RequireRole(RoleName.Administrator);
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

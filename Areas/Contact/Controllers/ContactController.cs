@@ -13,6 +13,7 @@ using NuGet.Common;
 namespace MultilEcommer.Areas_Contact_Controllers_
 {
     [Area("Contact")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class ContactController : Controller
     {
         private readonly ApplicationDbContext _context;
