@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MultilEcommer.Models;
 using MultilEcommer.Models.Contact;
-using MultilEcommer.Models.Blogs;
+using MultilEcommer.Areas.Blog.Models;
 
 namespace MultilEcommer.Data;
 
@@ -28,8 +28,12 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
                 entityType.SetTableName(tableName.Substring(6));
             }
         }
+
+        builder.Entity<Category>(entity => {
+            entity.HasIndex(c => c.Slug);
+        });
     }
     public DbSet<Contact> Contacts { get; set; }
 
-    //public DbSet<MultilEcommer.Models.Blogs.Category> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }
