@@ -12,8 +12,8 @@ using MultilEcommer.Data;
 namespace MultilEcommer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240828164454_BlogCategory")]
-    partial class BlogCategory
+    [Migration("20240828172929_blogcategory")]
+    partial class blogcategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

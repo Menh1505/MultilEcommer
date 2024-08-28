@@ -5,7 +5,7 @@
 namespace MultilEcommer.Migrations
 {
     /// <inheritdoc />
-    public partial class BlogCategory : Migration
+    public partial class blogcategory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -4,6 +4,8 @@ using MultilEcommer.Data;
 using MultilEcommer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddOptions();
 var mailsetting = builder.Configuration.GetSection("MailSettings");

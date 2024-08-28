@@ -4,26 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using MultilEcommer.Areas.Blog.Models;
 using MultilEcommer.Data;
+using Microsoft.Extensions.Logging;
 
-namespace MultilEcommer.Areas_Blog_Controllers_
+namespace MultilEcommer.Areas.Blog.Controllers
 {
+
+    [Area("Blog")]
+    [Route("admin/blog/category/[action]/{id?}")]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CategoryController(ApplicationDbContext context)
+        private readonly ILogger<CategoryController> _logger;
+        public CategoryController(ApplicationDbContext context, ILogger<CategoryController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
+        private string StatusMessage {get; set;}
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Categories.Include(c => c.ParentCategory);
-            return View(await applicationDbContext.ToListAsync());
+            var qr = (from c in _context.Categories select c)
+                    .Include(c => c.ParentCategory)
+                    .Include(c => c.CategoryChildren);
+
+            var categories = (await qr.ToListAsync()).Where(c => c.ParentCategory == null).ToList();
+            return View(categories);
         }
 
         // GET: Category/Details/5
@@ -45,10 +56,41 @@ namespace MultilEcommer.Areas_Blog_Controllers_
             return View(category);
         }
 
-        // GET: Category/Create
-        public IActionResult Create()
+        private void CreateSelectItems(List<Category> source, List<Category> des, int level)
         {
-            ViewData["ParentCategoryId"] = new SelectList(_context.Categories, "Id", "Slug");
+            string prefix = string.Concat(Enumerable.Repeat("-",level));
+            foreach(var category in source)
+            {
+                des.Add(new Category(){
+                    Id = category.Id,
+                    Title = prefix + category.Title
+                });
+                if(category.CategoryChildren?.Count > 0)
+                {
+                    CreateSelectItems(category.CategoryChildren.ToList(), des, level + 1);
+                }
+            }
+        }
+        // GET: Category/Create
+        public async Task<IActionResult> CreateAsync()
+        {
+            var qr = (from c in _context.Categories select c)
+                    .Include(c => c.ParentCategory)
+                    .Include(c => c.CategoryChildren);
+
+            var categories = (await qr.ToListAsync()).Where(c => c.ParentCategory == null).ToList();
+
+            categories.Insert(0, new Category(){
+                Id = -1,
+                Title = "Không có danh mục cha"
+            });
+            
+            var items = new List<Category>();
+            CreateSelectItems(categories, items, 0);
+
+            var selectList = new SelectList(items, "Id", "Title");
+            ViewData["ParentCategoryId"] = selectList;
+            
             return View();
         }
 
@@ -57,15 +99,34 @@ namespace MultilEcommer.Areas_Blog_Controllers_
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Slug,ParentCategoryId")] Category category)
+        public async Task<IActionResult> CreateAsync([Bind("Id,Title,Description,Slug,ParentCategoryId")] Category category)
         {
+            _logger.LogInformation("reach create");
             if (ModelState.IsValid)
             {
+                if(category.ParentCategoryId == -1) category.ParentCategoryId = null;
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                StatusMessage = "Thêm thành công";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentCategoryId"] = new SelectList(_context.Categories, "Id", "Slug", category.ParentCategoryId);
+            var qr = (from c in _context.Categories select c)
+                    .Include(c => c.ParentCategory)
+                    .Include(c => c.CategoryChildren);
+
+            var categories = (await qr.ToListAsync()).Where(c => c.ParentCategory == null).ToList();
+
+            categories.Insert(0, new Category(){
+                Id = -1,
+                Title = "Không có danh mục cha"
+            });
+            
+            var items = new List<Category>();
+            CreateSelectItems(categories, items, 0);
+
+            var selectList = new SelectList(items, "Id", "Title");
+            ViewData["ParentCategoryId"] = selectList;
+            StatusMessage = "Thêm thất bại";
             return View(category);
         }
 
@@ -76,13 +137,26 @@ namespace MultilEcommer.Areas_Blog_Controllers_
             {
                 return NotFound();
             }
-
             var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            ViewData["ParentCategoryId"] = new SelectList(_context.Categories, "Id", "Slug", category.ParentCategoryId);
+            if(category == null) return NotFound();
+
+            var qr = (from c in _context.Categories select c)
+                    .Include(c => c.ParentCategory)
+                    .Include(c => c.CategoryChildren);
+
+            var categories = (await qr.ToListAsync()).Where(c => c.ParentCategory == null).ToList();
+
+            categories.Insert(0, new Category(){
+                Id = -1,
+                Title = "Không có danh mục cha"
+            });
+            
+            var items = new List<Category>();
+            CreateSelectItems(categories, items, 0);
+
+            var selectList = new SelectList(items, "Id", "Title");
+            ViewData["ParentCategoryId"] = selectList;
+
             return View(category);
         }
 
@@ -97,11 +171,17 @@ namespace MultilEcommer.Areas_Blog_Controllers_
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            
+            if(category.ParentCategoryId == category.Id)
+            {
+                ModelState.AddModelError(string.Empty, "Phải chọn danh mục cha khác danh mục hiện tại");
+            }
+            if (ModelState.IsValid && category.ParentCategoryId != category.Id)
             {
                 try
                 {
+                    if(category.ParentCategoryId == -1)
+                    category.ParentCategoryId = null;
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
@@ -119,6 +199,8 @@ namespace MultilEcommer.Areas_Blog_Controllers_
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ParentCategoryId"] = new SelectList(_context.Categories, "Id", "Slug", category.ParentCategoryId);
+
+            StatusMessage = "Sửa thành công";
             return View(category);
         }
 
@@ -146,13 +228,20 @@ namespace MultilEcommer.Areas_Blog_Controllers_
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var category = await _context.Categories.Include(c => c.CategoryChildren).FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null)
             {
-                _context.Categories.Remove(category);
+                return NotFound();
+            }
+            foreach(var cCategory in category.CategoryChildren)
+            {
+                cCategory.ParentCategoryId = category.ParentCategoryId;
             }
 
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            StatusMessage = "Xóa thành công";
             return RedirectToAction(nameof(Index));
         }
 
